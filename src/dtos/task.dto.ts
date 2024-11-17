@@ -12,9 +12,13 @@ export const createTaskSchema = createValidationSchema({
     title: z.string().trim().max(MAX_TASK_TITLE_LENGTH),
     description: z.string().trim().max(MAX_TASK_DESCRIPTION_LENGTH),
     dueDate: z.coerce.date(),
-    priority: z.enum(Object.values(TaskPriority) as [string, ...string[]]),
+    priority: z
+      .enum(Object.values(TaskPriority) as [string, ...string[]])
+      .default(TaskPriority.Medium)
+      .optional(),
     status: z
       .enum(Object.values(TaskStatus) as [string, ...string[]])
+      .default(TaskStatus.Pending)
       .optional(),
     order: z.number().optional(),
   },

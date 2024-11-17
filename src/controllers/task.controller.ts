@@ -6,7 +6,7 @@ import {
   updateTaskSchema,
 } from "@/dtos";
 import { AppError, ValidatedAuthenticatedRequest } from "@/middlewares";
-import { TaskModel, TaskStatus } from "@/models";
+import { TaskModel, TaskPriority, TaskStatus } from "@/models";
 import { getObjectId } from "@/utils";
 
 export async function createTaskController(
@@ -23,6 +23,17 @@ export async function createTaskController(
   });
 
   res.status(201).json(task);
+}
+
+export async function getTaskStatusesController(_req: Request, res: Response) {
+  res.status(200).json(Object.values(TaskStatus));
+}
+
+export async function getTaskPrioritiesController(
+  _req: Request,
+  res: Response
+) {
+  res.status(200).json(Object.values(TaskPriority));
 }
 
 export async function getTasksController(

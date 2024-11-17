@@ -11,7 +11,7 @@ export async function signupController(
   res: Response
 ) {
   const userDto = req.validated.body;
-  const existingUser = await UserModel.find({ email: userDto.email });
+  const existingUser = await UserModel.findOne({ email: userDto.email });
   if (existingUser) throw new AppError("User already exists", 409);
 
   const { _id, email, username } = await createUserService(userDto);

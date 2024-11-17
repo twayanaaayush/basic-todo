@@ -3,7 +3,9 @@ import {
   createTaskController,
   deleteTaskController,
   getTaskController,
+  getTaskPrioritiesController,
   getTasksController,
+  getTaskStatusesController,
   updateTaskController,
 } from "@/controllers";
 import {
@@ -25,6 +27,13 @@ taskRouter.post(
   "/",
   dtoValidationMiddleware(createTaskSchema),
   tryCatchWrapper(createTaskController)
+);
+taskRouter.get("/statuses", tryCatchWrapper(getTaskStatusesController));
+taskRouter.get("/priorities", tryCatchWrapper(getTaskPrioritiesController));
+taskRouter.get(
+  "/:id",
+  dtoValidationMiddleware(taskIdSchema),
+  tryCatchWrapper(getTaskController)
 );
 taskRouter.get(
   "/:id",

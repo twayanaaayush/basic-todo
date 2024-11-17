@@ -3,12 +3,14 @@ import { InferSchemaType, Schema, Types, model } from "mongoose";
 export const MAX_TASK_TITLE_LENGTH = 50;
 export const MAX_TASK_DESCRIPTION_LENGTH = 500;
 
+// can be stored as separate collection for personalized customizations
 export enum TaskPriority {
   Low = "low",
   Medium = "medium",
   High = "high",
 }
 
+// can be stored as separate collection for personalized customizations
 export enum TaskStatus {
   Pending = "pending",
   InProgress = "in-progress",
