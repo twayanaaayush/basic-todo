@@ -6,6 +6,7 @@ dotenv.config();
 const envSchema = z.object({
   PORT: z.coerce.number().default(3000),
   JWT_SECRET: z.string(),
+  DB_URI: z.string(),
 });
 
 const envVars = envSchema.safeParse(process.env);
@@ -21,4 +22,5 @@ if (!envVars.success) {
 export const config = {
   port: envVars.data.PORT,
   jwtSecret: envVars.data.JWT_SECRET,
+  dbUri: envVars.data.DB_URI,
 };

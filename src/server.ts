@@ -1,6 +1,6 @@
 import path from "path";
 import helmet from "helmet";
-import express from "express";
+import express, { Request, Response } from "express";
 
 import { config } from "./config";
 import {
@@ -8,15 +8,16 @@ import {
   corsHandlerMiddleware,
 } from "@middlewares/index";
 import { router } from "@routes/index";
+import mongoose from "mongoose";
 
 const app = express();
 const port = config.port;
+const dbUri = config.dbUri;
 
 // Static files and view engine
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "..", "public")));
+app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "src", "views"));
-
 app.use(helmet());
 app.use(corsHandlerMiddleware);
 app.use(express.json());
@@ -26,9 +27,17 @@ app.set("trust proxy", 1);
 app.use("/api/", router);
 app.use(errorHandlerMiddleware);
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+mongoose
+  .connect(dbUri)
+  .then((res) => {
+    app.listen(port, () => {
+      console.log(`Server is running on http://localhost:${port}`);
+    });
+  })
+  .catch((err) => {
+    console.error("Error connecting to MongoDB:", err);
+    process.exit(1);
+  });
 
 process.on("SIGINT", () => {
   console.log("SIGINT: Server is shutting down...");
