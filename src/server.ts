@@ -1,6 +1,5 @@
-import path from "path";
 import helmet from "helmet";
-import express, { Request, Response } from "express";
+import express from "express";
 
 import { config } from "./config";
 import {
@@ -14,10 +13,6 @@ const app = express();
 const port = config.port;
 const dbUri = config.dbUri;
 
-// Static files and view engine
-app.use(express.static(path.join(__dirname, "..", "public")));
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
 app.use(helmet());
 app.use(corsHandlerMiddleware);
 app.use(express.json());
