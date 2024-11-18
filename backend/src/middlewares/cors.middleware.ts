@@ -4,6 +4,9 @@ import { Request } from "express";
 const allowedOrigins: Record<string, string[]> = {
   GET: ["*"],
   POST: ["*"],
+  PATCH: ["*"],
+  DELETE: ["*"],
+  OPTIONS: ["*"],
 };
 
 const getOrigins = (method: string) => {

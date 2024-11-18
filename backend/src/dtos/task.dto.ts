@@ -9,8 +9,16 @@ import {
 
 export const createTaskSchema = createValidationSchema({
   body: {
-    title: z.string().trim().max(MAX_TASK_TITLE_LENGTH),
-    description: z.string().trim().max(MAX_TASK_DESCRIPTION_LENGTH),
+    title: z
+      .string()
+      .trim()
+      .min(1, "Title is required")
+      .max(MAX_TASK_TITLE_LENGTH),
+    description: z
+      .string()
+      .trim()
+      .min(1, "Description is required")
+      .max(MAX_TASK_DESCRIPTION_LENGTH),
     dueDate: z.coerce.date(),
     priority: z
       .enum(Object.values(TaskPriority) as [string, ...string[]])
